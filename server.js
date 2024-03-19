@@ -11,12 +11,12 @@ dotenv.config();
 // mongodb connection
 connectDB();
 
-//rest object
+// rest object
 const app = express();
 
-//API request logger middleware
+// PI request logger middleware
 
-//middlewares
+// middlewares
 app.use(
   cors({
     origin: [process.env.CLIENTURL, "http://192.168.29.183:5173"],

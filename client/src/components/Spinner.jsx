@@ -6,7 +6,7 @@ const Spinner = () => {
       className="spinner-container d-flex justify-content-center spinner"
       style={{ backgroundColor: "#002132" }}
     >
-      <img style={{width: '80px'}} src="/logo.png"></img>
+      <img style={{width: '80px'}} src="/doctorbuddy-logo.png"></img>
     </div>
   );
 };
