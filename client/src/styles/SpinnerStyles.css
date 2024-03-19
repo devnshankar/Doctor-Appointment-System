@@ -32,11 +32,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   border: 2px solid #0084ca; /* Adjust the color of the glow */
-  animation: pulse 1.5s linear infinite;
+  animation: pulse 1.5s ease-in infinite;
 }
 
 @keyframes pulse {
@@ -44,7 +44,7 @@
     box-shadow: 0 0 0 0 rgba(0, 132, 202, 0.7); /* Adjust the color and intensity of the glow */
   }
   70% {
-    box-shadow: 0 0 0 60px rgba(0, 132, 202, 0); /* Adjust the color and intensity of the glow */
+    box-shadow: 0 0 0 1060px rgba(0, 132, 202, 0); /* Adjust the color and intensity of the glow */
   }
   100% {
     box-shadow: 0 0 0 0 rgba(0, 132, 202, 0); /* Adjust the color and intensity of the glow */
