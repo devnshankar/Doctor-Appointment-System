@@ -1,0 +1,33 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: normal;
+  font-weight: 600;
+}
+
+/* loader */
+.spinner{
+  height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.spinner-border{
+  width:60px;
+  height:60px;
+}
+.form-btn{
+  width:100% !important;
+  margin-top: 30px !important;
+}
+.custom-row-style{
+  font-size: 17px;
+}
+
+

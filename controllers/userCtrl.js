@@ -15,27 +15,31 @@ const registerController = async (req, res) => {
     // if user already exists in the database then the user will be redirected to the login page
     if (existingUser) {
       return res
-        .status(200)
-        .send({ message: "User Already Exists", success: false });
+        .status(409)
+        .json({ message: "User Already Exists", success: false });
     }
-    // getting password from the body
-    const password = req.body.password;
-    // creating salt for the password using bcrypt
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    // now replacing the password that the user sent with the hashed version we made using bcrypt
-    req.body.password = hashedPassword;
-    // now we'll create a new user using new data we got
-    const newUser = new userModel(req.body);
-    // now the new user is saved to the db
-    await newUser.save();
-    // success message is sent to the client
-    res.status(201).send({ message: "Registered Successfully", success: true });
+    else {
+      // getting password from the body
+      const password = req.body.password;
+      // creating salt for the password using bcrypt
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      // now replacing the password that the user sent with the hashed version we made using bcrypt
+      req.body.password = hashedPassword;
+      // now we'll create a new user using new data we got
+      const newUser = new userModel(req.body);
+      // now the new user is saved to the db
+      await newUser.save();
+      // success message is sent to the client
+      res
+        .status(200)
+        .json({ message: "Registered Successfully", success: true });
+    }
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: `Register Controller:- ${error.message}`,
+      message: `Failed registering User \n${error.message}`,
     });
   }
 };
@@ -48,29 +52,31 @@ const loginController = async (req, res) => {
     // if user not found then error message is shown
     if (!user) {
       return res
-        .status(200)
-        .send({ message: "Invalid email or password", success: false });
+        .status(401)
+        .json({ message: "Invalid email or password", success: false });
     }
-    // compares password from login form with db's user's password
-    const isMatch = await bcrypt.compare(req.body.password, user.password);
-    // if password doesn't match then not recognized message is send to the client
-    if (!isMatch) {
-      return res
+    else{
+      // compares password from login form with db's user's password
+      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      // if password doesn't match then not recognized message is send to the client
+      if (!isMatch) {
+        return res
+          .status(401)
+          .json({ message: "Invalid email or password", success: false });
+      }
+      // we're creating a token for the sign in which takes the id of the user and the
+      // secret key with the time of expiry of cookie so that use has to login again in 1 day
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      });
+      // the success message is sent to the client when user logins sucessfully also sending the token
+      res
         .status(200)
-        .send({ message: "Invalid email or password", success: false });
+        .json({ message: "Login successfull", success: true, token });
     }
-    // we're creating a token for the sign in which takes the id of the user and the
-    // secret key with the time of expiry of cookie so that use has to login again in 1 day
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-    // the success message is sent to the client when user logins sucessfully also sending the token
-    res
-      .status(200)
-      .send({ message: "Login successfull", success: true, token });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ message: `Error in login ctrl ${error.message}` });
+    res.status(500).json({ message: `Could not login User Please try again \n${error.message}`, success: false});
   }
 };
 
@@ -80,22 +86,22 @@ const authController = async (req, res) => {
     const user = await userModel.findById({ _id: req.body.userId });
     user.password = undefined;
     if (!user) {
-      return res.status(200).send({
-        message: "user not found",
+      return res.status(404).json({
+        message: "User not found with the provided credentials",
         success: false,
       });
     } else {
-      res.status(200).send({
+      res.status(200).json({
         success: true,
+        message: "User found successfully",
         data: user,
       });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send({
-      message: "auth error",
-      success: "false",
-      error,
+    res.status(500).json({
+      message: `Authorization failed \n${error.message}`,
+      success: false,
     });
   }
 };
@@ -121,16 +127,16 @@ const applyDoctorController = async (req, res) => {
       },
     });
     await userModel.findByIdAndUpdate(adminUser._id, { notification });
-    res.status(201).send({
+    res.status(200).send({
       success: true,
-      message: "Doctor account applied successfully",
+      message: "Doctor account application successful",
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      error,
-      message: "Error while applying for Doctor",
+      message: `Error while applying for Doctor \n${error.message}`,
+      
     });
   }
 };
@@ -154,10 +160,9 @@ const markAsReadAllNotificationController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
-      message: "Error in notification",
+    res.status(500).json({
+      message: `Failed to mark the notifications as read \n${error.message}`,
       success: false,
-      error,
     });
   }
 };
@@ -176,10 +181,9 @@ const deleteAllNotificationController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: "Unable to delete all notificaions",
-      error,
+      message: `Unable to delete all notificaions \n${error.message}`,
     });
   }
 };
@@ -188,17 +192,16 @@ const deleteAllNotificationController = async (req, res) => {
 const getAllDoctorsController = async (req, res) => {
   try {
     const doctors = await doctorModel.find({ status: "approved" });
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "Doctors list fetched successfully",
       data: doctors,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      error,
-      message: "Error while fetching doctors",
+      message: `Error while fetching doctors \n${error.message}`,
     });
   }
 };
@@ -216,16 +219,15 @@ const bookAppointmentController = async (req, res) => {
       onClickPath: "/user/appointments",
     });
     await user.save();
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "Appointment booked successfully",
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      error,
-      message: "Error while booking appointment",
+      message: `Error while booking appointment \n${error.message}`,
     });
   }
 };
@@ -248,22 +250,21 @@ const bookingAvailabilityController = async (req, res) => {
       },
     });
     if (appointments.length > 0) {
-      return res.status(200).send({
+      return res.status(200).json({
         message: "Appointments not available at this time",
         success: true,
       });
     } else {
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Appointment available",
       });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      error,
-      message: "Error in booking availability",
+      message: `Error in booking availability \n${error.message}`,
     });
   }
 };
@@ -274,17 +275,16 @@ const userAppointmentsController = async (req, res) => {
     const appointments = await appointmentModel.find({
       userId: req.body.userId,
     });
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "Users appointments fetched successfully",
       data: appointments,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      error,
-      message: "Error in user appointments",
+      message: `Error in user appointments \n${error.message}`,
     });
   }
 };

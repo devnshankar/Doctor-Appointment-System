@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require("express");
 const authMiddleware = require("../middlewares/authMiddleware");
 const {
   getAllUsersController,
@@ -6,7 +6,7 @@ const {
   changeAccountStatusController,
 } = require("../controllers/adminCtrl");
 
-const router = express.Router()
+const router = express.Router();
 
 // GET USERS CONTROLLER || GET
 router.get("/getAllUsers", authMiddleware, getAllUsersController);
@@ -15,6 +15,10 @@ router.get("/getAllUsers", authMiddleware, getAllUsersController);
 router.get("/getAllDoctors", authMiddleware, getAllDoctorsController);
 
 // POST ACCOUNT STATUS FOR DOCTOR APPROVAL || POST
-router.post("/changeAccountStatus", authMiddleware, changeAccountStatusController)
+router.post(
+  "/changeAccountStatus",
+  authMiddleware,
+  changeAccountStatusController
+);
 
-module.exports = router
+module.exports = router;

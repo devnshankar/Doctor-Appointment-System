@@ -14,35 +14,30 @@ connectDB();
 //rest object
 const app = express();
 
+//API request logger middleware
+
 //middlewares
 app.use(
   cors({
-    origin: `${process.env.CLIENTURL}`,
+    origin: [process.env.CLIENTURL, "http://192.168.29.183:5173"],
+    credentials: true,
   })
 );
+
+app.get("/", (req, res) => {
+  res.send("Server running ");
+});
+
 app.use(express.json());
 app.use(morgan("dev"));
 
-// routes
-//! this is just for dev related purpose
-// app.get("/", (req, res) => {
-//   res.status(200).send({
-//     message: "server running",
-//   });
-// });
-//
-app.use("/api/v1/user", require("./routes/userRoutes"));
-app.use("/api/v1/admin", require("./routes/adminRoutes"));
-app.use("/api/v1/doctor", require("./routes/doctorRoutes"));
-
-//static files //!deployment
-// app.use(express.static(path.join(__dirname, "./client/dist")));
-// app.get("*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "./client/dist/index.html"));
-// });
+// Routes
+app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/doctor", require("./routes/doctorRoutes"));
 
 //port
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 
 //listen port
 app.listen(port, () => {

@@ -20,9 +20,12 @@ router.post("/updateProfile", authMiddleware, updateProfileController);
 router.post("/getDoctorById", authMiddleware, getDoctorByIdController);
 
 // GET APPOINTMENTS || GET
-router.get("/doctor-appointments", authMiddleware, getDoctorAppointmentsController)
+router.get(
+  "/doctor-appointments",
+  authMiddleware,
+  getDoctorAppointmentsController
+);
 
 // UPDATE APPOINTMENT STATUS || POST
-router.post("/update-status", authMiddleware, updateStatusController)
+router.post("/update-status", authMiddleware, updateStatusController);
 module.exports = router;
-
