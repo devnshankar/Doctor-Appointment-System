@@ -16,13 +16,14 @@ import ApplyDoctor from "./pages/ApplyDoctor";
 import BookingPage from "./pages/BookingPage";
 import Appointments from "./pages/Appointments";
 import DoctorAppointments from "./pages/doctor/DoctorAppointments";
+import { triggerFocus } from "antd/es/input/Input";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   console.log(import.meta.env.VITE_APP_SERVER_URL);
   return (
     <>
       <BrowserRouter>
-        {loading ? (
+        {true ? (
           <Spinner />
         ) : (
           <Routes>
