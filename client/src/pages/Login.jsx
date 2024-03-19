@@ -49,7 +49,7 @@ const Login = () => {
         >
           <div className="form-header flex-column">
             <img
-              src="/logo.png"
+              src="/doctorbuddy-logo.png"
               className="ml-10"
               style={{
                 width: "50px",

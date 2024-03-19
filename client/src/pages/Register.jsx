@@ -49,7 +49,7 @@ const Register = () => {
         >
           <div className="form-header flex-column">
             <img
-              src="/logo.png"
+              src="/doctorbuddy-logo.png"
               className="ml-10"
               style={{ width: "50px", margin: "0px auto 10px ", justifyContent: 'center', display: "flex" }}
               alt="Logo"
