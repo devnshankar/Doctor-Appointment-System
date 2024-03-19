@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Input, message } from "antd";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -47,8 +47,21 @@ const Login = () => {
           onFinish={onFinishHandler}
           className="login-form"
         >
-          <div className="form-header">
-            <h1 className="form-header-text text-center text-white">Login</h1>
+          <div className="form-header flex-column">
+            <img
+              src="/logo.png"
+              className="ml-10"
+              style={{
+                width: "50px",
+                margin: "0px auto 10px ",
+                justifyContent: "center",
+                display: "flex",
+              }}
+              alt="Logo"
+            ></img>
+            <h1 className="form-header-text text-center text-white">
+              Login
+            </h1>
           </div>
           <Form.Item label="Email" name="email">
             <Input
@@ -88,8 +101,6 @@ const Login = () => {
               style={{
                 color: "#0d6efd",
                 textDecoration: "underline",
-              
-
               }}
             >
               Register here
