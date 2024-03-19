@@ -1,0 +1,52 @@
+.spinner-container{
+  align-items: center;
+  height: 100vh;
+  background-color: #002132;
+  opacity: 1;
+  background-image: radial-gradient(
+      circle at center center,
+      #0084ca,
+      #002132
+    ),
+    repeating-radial-gradient(
+      circle at center center,
+      #0084ca,
+      #0084ca,
+      40px,
+      transparent 80px,
+      transparent 40px
+    );
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.spinner {
+  position: relative;
+}
+
+.spinner::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid #0084ca; /* Adjust the color of the glow */
+  animation: pulse 1.5s linear infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 132, 202, 0.7); /* Adjust the color and intensity of the glow */
+  }
+  70% {
+    box-shadow: 0 0 0 60px rgba(0, 132, 202, 0); /* Adjust the color and intensity of the glow */
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 132, 202, 0); /* Adjust the color and intensity of the glow */
+  }
+}

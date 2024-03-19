@@ -1,0 +1,95 @@
+/* LoginStyles.css */
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #002132;
+  opacity: 1;
+  background-image: radial-gradient(
+      circle at center center,
+      #0084ca,
+      #002132
+    ),
+    repeating-radial-gradient(
+      circle at center center,
+      #0084ca,
+      #0084ca,
+      40px,
+      transparent 80px,
+      transparent 40px
+    );
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 390px;
+  height: auto;
+  background: blue;
+  padding: 20px;
+  background-color: #113a5056;
+  border-radius: 5px;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.6);
+}
+
+:where(.css-dev-only-do-not-override-1fviqcj).ant-form-item .ant-form-item-label > label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: 32px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+:where(.css-dev-only-do-not-override-1fviqcj).ant-input {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 4px 11px;
+	color: rgba(213, 213, 213, 0.88);
+	font-size: 14px;
+	line-height: 1.5714285714285714;
+	list-style: none;
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	min-width: 0;
+	background-color: #0000;
+	background-image: none;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #d9d9d9;
+	border-radius: 6px;
+	transition: all 0.2s;
+}
+
+:where(.css-dev-only-do-not-override-1fviqcj).ant-input-affix-wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 11px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  background-color: #0000;
+  background-image: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #d9d9d9;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.ant-input::placeholder {
+  color: gray; /* Change placeholder color here */
+}
+

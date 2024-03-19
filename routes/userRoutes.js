@@ -48,10 +48,14 @@ router.get("/getAllDoctors", authMiddleware, getAllDoctorsController);
 module.exports = router;
 
 // BOOK APPOINTMENT || POST
-router.post("/book-appointment", authMiddleware, bookAppointmentController)
+router.post("/book-appointment", authMiddleware, bookAppointmentController);
 
 // BOOKING AVAILABILITY ROUTER || POST
-router.post("/booking-availability", authMiddleware, bookingAvailabilityController);
+router.post(
+  "/booking-availability",
+  authMiddleware,
+  bookingAvailabilityController
+);
 
 // APPOINTMENTS LIST ROUTER || GET
-router.get("/user-appointments", authMiddleware, userAppointmentsController)
+router.get("/user-appointments", authMiddleware, userAppointmentsController);

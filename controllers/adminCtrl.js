@@ -5,34 +5,32 @@ const {ObjectId} = require("mongodb")
 const getAllUsersController = async (req, res) => {
   try {
     const users = await userModel.find({}); //! FIX THE PASSWORDS UNDEFINING PROBLEM
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "Users data list",
       data: users,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: "Error while fetching users",
-      error,
+      message: `Error while fetching users \n${error.message}`,
     });
   }
 };
 const getAllDoctorsController = async (req, res) => {
   try {
     const doctors = await doctorModel.find({});
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "Doctors data list",
       data: doctors,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: "Error while fetching doctors",
-      error,
+      message: `Error while fetching doctors \n${error.message}`,
     });
   }
 };
@@ -52,7 +50,7 @@ const changeAccountStatusController = async (req, res) => {
     user.isDoctor = (status === "approved")? true : false;            //!fixed and added "= status" 
       user.isDoctor = true;
       await user.save();
-      res.status(201).send({
+      res.status(201).json({
         success: true,
         message: "Account status updated",
         data: doctor,
@@ -60,10 +58,9 @@ const changeAccountStatusController = async (req, res) => {
     
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: "Error in account status",
-      error,
+      message: `Error in account status \n${error.message}`,
     });
   }
 };
