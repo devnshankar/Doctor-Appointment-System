@@ -1,7 +1,7 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons"; // Import icons for show/hide password
 import { Form, Input, message } from "antd";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
@@ -47,7 +47,13 @@ const Register = () => {
           onFinish={onFinishHandler}
           className="register-form"
         >
-          <div className="form-header">
+          <div className="form-header flex-column">
+            <img
+              src="/logo.png"
+              className="ml-10"
+              style={{ width: "50px", margin: "0px auto 10px ", justifyContent: 'center', display: "flex" }}
+              alt="Logo"
+            ></img>
             <h1 className="form-header-text text-center text-white">
               Register
             </h1>
